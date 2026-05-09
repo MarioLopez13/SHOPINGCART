@@ -5,6 +5,10 @@ def ejecutarMaven(String comando) {
 pipeline {
     agent any
 
+    tools {
+        maven 'Maven 3'
+    }
+
     stages {
 
         stage('Clonar código') {
@@ -56,16 +60,6 @@ pipeline {
                     ejecutarMaven('package -DskipTests')
                 }
             }
-        }
-    }
-
-    post {
-        success {
-            echo 'Pipeline ejecutado correctamente.'
-        }
-
-        failure {
-            echo 'El pipeline falló. Revisar consola de Jenkins.'
         }
     }
 }
