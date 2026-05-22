@@ -17,7 +17,7 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Ejecutar pruebas en paralelo
+          name: Ejecutar pruebas
           command: mvn test
 
   quality:
@@ -26,7 +26,7 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Validar proyecto Maven
+          name: Validar proyecto
           command: mvn validate
 
   package:
@@ -39,19 +39,14 @@ jobs:
           command: mvn package -DskipTests
 
 workflows:
+  version: 2
+
   validacion:
     jobs:
       - build
-      - test:
-          requires:
-            - build
-      - quality:
-          requires:
-            - build
+      - test
+      - quality
 
   entrega:
     jobs:
-      - package:
-          requires:
-            - test
-            - quality
+      - package
