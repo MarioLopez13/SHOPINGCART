@@ -18,7 +18,7 @@ jobs:
       - checkout
       - run:
           name: Ejecutar pruebas
-          command: mvn test
+          command: mvn testrrr
 
   quality:
     docker:
