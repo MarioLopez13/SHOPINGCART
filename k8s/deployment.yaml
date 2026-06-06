@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: shoppingcart
-          image: mario3285/shoppingcart:1.0
+          image: nginx:latest
           imagePullPolicy: Always
           ports:
-            - containerPort: 8080
+            - containerPort: 80
