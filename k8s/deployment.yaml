@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: shoppingcart
+  name: shoppingcart-app
 spec:
   replicas: 1
   selector:
@@ -14,13 +14,6 @@ spec:
     spec:
       containers:
         - name: shoppingcart
-          image: tomcat:9.0
+          image: nginx:latest
           ports:
-            - containerPort: 8080
-          resources:
-            requests:
-              memory: "128Mi"
-              cpu: "100m"
-            limits:
-              memory: "256Mi"
-              cpu: "200m"
+            - containerPort: 80
