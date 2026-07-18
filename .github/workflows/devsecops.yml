@@ -1,0 +1,36 @@
+name: Despliegue continuo en Argo CD - DevSecOps Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configurar Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+          cache: maven
+
+      - name: Compilar proyecto
+        run: mvn clean package -DskipTests
+
+      - name: Construir imagen Docker
+        run: docker build -f dockerfile -t spring-demo .
+
+      - name: Ejecutar Semgrep (SAST)
+        uses: returntocorp/semgrep-action@v1
+
+      - name: Ejecutar OWASP ZAP (DAST)
+        uses: zaproxy/action-baseline@v0.14.0
+        with:
+          target: "https://example.com"
+          allow_issue_writing: false
